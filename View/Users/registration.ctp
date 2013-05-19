@@ -11,6 +11,10 @@
 		     echo $this->form->input('',array('name'=>'password', 'type'=>'password'));
 			 echo 'Підтвердження пaроля<br>';
 			 echo $this->form->input('',array('name'=>'password2', 'type'=>'password'));
+			 if($status['email']==='superadmin@admin.com'){
+			 echo 'Створити модератора???<br>';
+			 echo $this->form->input('',array('name'=>'moderator', 'type'=>'checkbox','value'=>"true"));
+			 }
 		 echo $this->form->end('Зареєструватися');?>
 
 </div>

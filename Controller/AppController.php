@@ -33,8 +33,73 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	public $components = array('Session','Auth');
+	public $uses=array('Post','Tag','User','PostsTag','Group','Permission');
+	
+	
+	/**
+	* beforeFilter
+	* Метод, який викликається перед кожною дією контроллера  
+	* @access public
+	*/
 	public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+		$this->Auth->fields = array('username'=>'email','password'=>'password');
+        $this->Auth->authorize = 'Controller';
+	}
+     /**
+     * isAuthorized
+     * 
+     * Викликається компонентою Auth для провірки доступу до методу
+     * 
+     * @return true ,якщо користувач має доступ /false ,якщо користувач не має доступу
+     * @access public
+     */
+	function isAuthorized(){
+		return $this->__permitted($this->name,$this->action);
+		
+	}
+    /**
+     * __permitted
+     * 
+     * Метод , який здійснює провірку доступу користувача до методів,провірка здійснюється у форматі $Controller:$action
+     * 
+     * @return true ,якщо користувач має доступ /false ,якщо користувач не має доступу
+     * @param $controllerName Object
+     * @param $actionName Object
+     * @access public
+     */
+	function __permitted($controllerName,$actionName){
+		if(!$this->Session->check('Permissions')){
+            $permissions = array();
+            $permissions[]='Users:logout';
+            $thisUser= $this->User->find('first', array('conditions'=>array('User.email'=>$this->Auth->user('email'))));
+			$thisGroup = $thisUser['Group'];
+			$thisPermissionsId = $this->User->Group->GroupsPermission->find('all', array('conditions'=>array('GroupsPermission.group_id'=>$thisGroup['id'])));
+			
+			foreach($thisPermissionsId as $thisPermissionId){
+				$permissions[]=$thisPermissionId['Permission']['permission'];
+			}
+
+            $this->Session->write('Permissions',$permissions);
+        }else{
+            
+            $permissions = $this->Session->read('Permissions');
+        }
         
+        foreach($permissions as $permission){
+            if($permission == '*'){
+                return true;
+            }
+            if($permission == $controllerName.':*'){
+               return true;
+            }
+            if($permission == $controllerName.':'.$actionName){
+               return true;
+            }
+        }
+        return false;
     }
+    
+    
+    
 }
+

@@ -1,9 +1,13 @@
 <?php
+/**
+ * Tags Controller
+ * 
+ * Клас, який описує Теги
+ */
 Class TagsController extends AppController
 {
-	var $name = 'Tag';
-	
-	var $uses = array('Tag','Post','PostTag');
-
+	public $name = 'Tags';
+	public $uses = array('Tag','Post','PostsTag');
+	public $scaffold;
 }
 ?>

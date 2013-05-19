@@ -1,5 +1,10 @@
 <?php
 App::uses('Model', 'AppModel');
+/**
+ * Post
+ * 
+ * Клас, який описує модель користувачів
+ */
 class User extends AppModel
 {
 	public $name = 'User';
@@ -9,6 +14,12 @@ class User extends AppModel
             'foreignKey'    => 'user_id'
         )
        
+    );
+    public $belongsTo = array(
+        'Group' => array(
+            'className'    => 'Group',
+            'foreignKey'   => 'group_id'
+        )
     );
     
     public $validate = array(

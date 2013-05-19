@@ -10,8 +10,6 @@
 			echo "<br><b>Повний текст</b><br>";
 			echo $this->form->textarea('',array( 'name'=>'long_text','value'=>$post['Post']['long_text']));
 			echo $this->form->hidden('',array( 'name'=>'user_id','value'=>$post['Post']['user_id']));
-			echo "<br><b>Теги(розділювач для множинного вводу - ",")</b><br>";
-			echo $this->form->textarea('',array( 'name'=>'tags'));
 			echo $this->Form->submit('Редагувати') ?>
 		
 		

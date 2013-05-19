@@ -1,11 +1,16 @@
 <?php
+/**
+ * Post
+ * 
+ * Клас, який описує модель постів
+ */
 App::uses('Model', 'AppModel');
 class Post extends AppModel
 {
-     public $name = 'Post';
+   public $name = 'Post';
    public $hasMany = array(
-		'PostTag'=> array(
-            'className'     => 'PosTag',
+		'PostsTag'=> array(
+            'className'     => 'PostsTag',
             'foreignKey'    => 'post_id'
         )
     );
@@ -48,6 +53,19 @@ class Post extends AppModel
 			),
          ),   
     );
+    /**
+     * isOwnedBy
+     * 
+     * Метод , який здійснює провірку того чи user_id поста =id користувача
+     * 
+     * @return true ,якщо user_id поста =id користувача/ false в ыншому випадку 
+     * @param $post int
+     * @param $user int
+     * @access public
+     */
+    public function isOwnedBy($post, $user) {
+		return $this->field('id', array('id' => $post, 'user_id' => $user)) === $post;
+	}
 }
 
 ?>
