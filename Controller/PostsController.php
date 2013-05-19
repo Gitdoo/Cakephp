@@ -16,7 +16,9 @@ class PostsController extends AppController
 	* Метод, який викликається перед кожною дією контроллера  
 	* @access public
 	*/
+	
 	function beforeFilter(){
+		
 		$this->Auth->authorize = 'Controller';
 		$this->Auth->allow('index','search');
 	}
@@ -29,7 +31,9 @@ class PostsController extends AppController
      * @return true ,якщо користувач має доступ /false ,якщо користувач не має доступу
      * @access public
      */
+     
 	public function isAuthorized($user) {
+		
 		if (in_array($this->action, array('edit', 'delete'))) {
 			$postId = $this->request->params['pass'][0];
 
@@ -42,6 +46,7 @@ class PostsController extends AppController
 		}
 		return parent::isAuthorized();
 	}
+	
 	/**
      * index
      * 
@@ -49,7 +54,9 @@ class PostsController extends AppController
      * 
      * @access public
      */
+     
     function index(){   
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
         $this->lists();
@@ -64,7 +71,9 @@ class PostsController extends AppController
      * 
      * @access public
      */
-    function lists(){    	
+     
+    function lists(){
+		   	
         $posts = $this->paginate();
         
     	if ($posts)
@@ -90,7 +99,9 @@ class PostsController extends AppController
      * @param $id int
      * @access public
      */
+     
 	function view($id = null){
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
         
@@ -121,7 +132,9 @@ class PostsController extends AppController
      * @return
      * @access public
      */
+     
     public function add() {
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		$user=$this->Post->User->findByEmail($this->Auth->user('email'));
@@ -163,7 +176,9 @@ class PostsController extends AppController
      * @return
      * @access public
      */
+     
     function edit($id){
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
        	$this->set('post', $this->Post->findById($id));
@@ -193,7 +208,9 @@ class PostsController extends AppController
      * @return
      * @access public
      */
+     
     function delete($id = null){
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
     	
@@ -218,8 +235,10 @@ class PostsController extends AppController
      * @return
      * @access public
      */
-	function search()
-    {	$this->layout = 'guestbook';
+     
+	function search(){	
+		
+		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
         $search = $this->data['search'];
         $condition = array('OR'=>array("`Post`.`created` LIKE '%$search%'","MATCH `Post`.`name` AGAINST('$search')", "MATCH `Post`.`short_text` AGAINST('$search')"));            

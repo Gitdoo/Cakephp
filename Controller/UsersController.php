@@ -24,7 +24,9 @@ class UsersController extends AppController
 	* Метод, який викликається перед кожною дією контроллера  
 	* @access public
 	*/
+	
     public function beforeFilter(){
+		
 		$this->Auth->authorize = 'Controller';
 		$this->Auth->allow('registration','forgot','recovery');
 
@@ -37,7 +39,9 @@ class UsersController extends AppController
      * 
      * @access public
      */
-    public function index(){   
+     
+    public function index(){  
+		 
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
         $this->lists();
@@ -52,7 +56,9 @@ class UsersController extends AppController
      * 
      * @access public
      */
+     
     public function registration(){	
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		
@@ -107,7 +113,9 @@ class UsersController extends AppController
      * @param $hash string
      * @access public
      */
+     
 	public function recovery($hash=NULL){	
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		
@@ -161,7 +169,9 @@ class UsersController extends AppController
      * @return 
      * @access public
      */
+     
     public function login(){	
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		if ($this->request->is('post')) 
@@ -181,8 +191,10 @@ class UsersController extends AppController
      * @return 
      * @access public
      */
-	public function logout() 
-	{	$this->layout = 'guestbook';
+     
+	public function logout() {	
+		
+		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		$this->Session->delete('Permissions');
 		$this->redirect($this->Auth->logout());
@@ -197,7 +209,9 @@ class UsersController extends AppController
      * @return 
      * @access public
      */
+     
 	public function forgot(){
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
 		$this->set('status',$this->Auth->user());
@@ -236,7 +250,9 @@ class UsersController extends AppController
      * @return
      * @access public
      */
+     
 	public function delete($id = null) {
+		
         $this->User->id = $id;
         
         if (!$this->User->exists()) {
@@ -259,7 +275,9 @@ class UsersController extends AppController
      * 
      * @access public
      */
+     
     public function lists(){    	
+		
         $users = $this->paginate();
         
     	if ($users)
@@ -285,7 +303,9 @@ class UsersController extends AppController
      * @param $id int
      * @access public
      */
+     
     function view($id = null){
+		
 		$this->layout = 'guestbook';
 		$this->set('status',$this->Auth->user());
         

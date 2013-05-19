@@ -41,7 +41,9 @@ class AppController extends Controller {
 	* Метод, який викликається перед кожною дією контроллера  
 	* @access public
 	*/
+	
 	public function beforeFilter() {
+		
 		$this->Auth->fields = array('username'=>'email','password'=>'password');
         $this->Auth->authorize = 'Controller';
 	}
@@ -53,10 +55,13 @@ class AppController extends Controller {
      * @return true ,якщо користувач має доступ /false ,якщо користувач не має доступу
      * @access public
      */
+     
 	function isAuthorized(){
+		
 		return $this->__permitted($this->name,$this->action);
 		
 	}
+	
     /**
      * __permitted
      * 
@@ -67,7 +72,9 @@ class AppController extends Controller {
      * @param $actionName Object
      * @access public
      */
+     
 	function __permitted($controllerName,$actionName){
+		
 		if(!$this->Session->check('Permissions')){
             $permissions = array();
             $permissions[]='Users:logout';
